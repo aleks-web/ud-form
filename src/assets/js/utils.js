@@ -54,3 +54,31 @@ HTMLElement.prototype.fadeOut = function (duration = 300, callback = () => {}) {
 
     requestAnimationFrame(animation.bind(this));
 }
+
+/*
+* Плавная прокрутка до числа
+* @param {number} count - число до которого нужно прокрутить
+* @param {number} speed - скорость прокрутки
+* @param {callback} callback - функция, которая срабатывает после завершения анимации
+* */
+HTMLElement.prototype.countAnimate = function(count, speed = 300, callback = () => {}) {
+    function updateTex(counter, text){
+        counter.textContent = text;
+    }
+
+    const animate = (countTo, duration) => {
+        let startTime = null;
+        const step = (currentTime) => {
+            if (!startTime) { startTime = currentTime; }
+            const progress = Math.min((currentTime - startTime) / duration, 1);
+            const currentNum = Math.floor(progress * countTo);
+            updateTex(this, currentNum);
+
+            if (progress < 1) { window.requestAnimationFrame(step); } else { window.cancelAnimationFrame(window.requestAnimationFrame(step)); callback({count, speed, callback}); }
+        };
+
+        window.requestAnimationFrame(step);
+    };
+
+    animate.bind(this)(count, speed);
+}
