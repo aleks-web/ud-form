@@ -3,9 +3,9 @@
 * @param {number} duration - Скорость анимации
 * @param {number} opacity - Установка значения opacity при открытии. Итоговое значение. Может пригодиться, например для фона модалки
 * @param {string} display - Свойство display, которое нужно установить для элемента
-* @param {callback} callback - Функция, которая срабатывает после завершения анимации
+* @param {callback} callback - функция, которая срабатывает после завершения анимации
 * */
-HTMLElement.prototype.fadeIn = function (duration = 300, opacity = 1, display = 'block', callback = () => {}) {
+HTMLElement.prototype.fadeIn = function (duration = 300, opacity = 1, display = 'block', callbackReady = () => {}) {
     this.style.opacity = 0;
     this.style.display = display || 'block';
     let startTime = null;
@@ -20,17 +20,19 @@ HTMLElement.prototype.fadeIn = function (duration = 300, opacity = 1, display = 
         if (progress < opacity) {
             requestAnimationFrame(animation.bind(this));
         } else {
-            callback(this, { duration, opacity, display, callback });
+            callbackReady(this, { duration, opacity, display, callbackReady });
         }
     }
 
     requestAnimationFrame(animation.bind(this));
+
+    return this;
 }
 
 /*
 * Плавное исчезновение
 * @param {number} duration - Скорость анимации
-* @param {callback} callback - Функция, которая срабатывает после завершения анимации
+* @param {callback} callback - функция, которая срабатывает после завершения анимации
 * */
 HTMLElement.prototype.fadeOut = function (duration = 300, callback = () => {}) {
     this.style.opacity = this.style.opacity ? this.style.opacity : 1;
@@ -53,6 +55,8 @@ HTMLElement.prototype.fadeOut = function (duration = 300, callback = () => {}) {
     }
 
     requestAnimationFrame(animation.bind(this));
+
+    return this;
 }
 
 /*
@@ -81,4 +85,21 @@ HTMLElement.prototype.countAnimate = function(count, speed = 300, callback = () 
     };
 
     animate.bind(this)(count, speed);
+}
+
+HTMLElement.prototype.setIntersectionObserver = function(callback, options) {
+    const observer = new IntersectionObserver((...e) => { callback(this, e) }, options);
+    observer.observe(this);
+}
+
+window.clearPhone = (string) => {
+    return '+' + string.replace(/[^\d]+/g, '');
+}
+
+document.body.disableScroll = () => {
+    document.body.style.overflow = 'hidden';
+}
+
+document.body.enableScroll = () => {
+    document.body.style.overflow = 'auto';
 }
