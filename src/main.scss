@@ -44,7 +44,9 @@ body h2 {
     overflow: hidden;
 
     @media (min-width: 576px) {
-        padding: 40px;
+        padding: 40px 40px 60px 40px;
+        margin-bottom: -58px;
+        border-radius: var(--rds);
     }
 
     &__image {
@@ -142,6 +144,7 @@ body h2 {
             margin: 0;
             margin-left: auto;
             margin-top: 15px;
+            text-align: right;
         }
 
         &-svg {
@@ -206,8 +209,6 @@ body h2 {
     }
 }
 
-
-
 .rev-form {
     background: url('./assets/img/bg-form.png');
     padding: 20px;
@@ -217,6 +218,63 @@ body h2 {
     z-index: 5;
     position: relative;
     background-color: white;
+
+    &__success {
+        overflow: hidden;
+
+        .rev-form-success {
+            display: flex;
+        }
+    }
+
+    &-success {
+        position: absolute;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        font-weight: 600;
+        color: #05BC80;
+        text-align: center;
+        pointer-events: none;
+        user-select: none;
+        display: none;
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 2;
+            opacity: 0.6;
+        }
+
+        svg {
+            max-width: 160px;
+            width: 100%;
+            z-index: 5;
+            color: #05BC80;
+
+            @media (min-width: 576px) {
+                max-width: 260px;
+            }
+        }
+
+        span {
+            display: flex;
+            margin: 0 auto;
+            z-index: 5;
+            font-size: 20px;
+
+            @media (min-width: 576px) {
+                font-size: 30px
+            }
+        }
+    }
 
     &__title {
         font-size: 23px;
@@ -247,6 +305,11 @@ body h2 {
         &:last-child {
             margin-bottom: 0;
         }
+
+        @media (min-width: 768px) {
+            flex-direction: row;
+            justify-content: center;
+        }
     }
 
     &__rating {
@@ -274,6 +337,10 @@ body h2 {
         box-sizing: border-box;
         width: 100%;
         cursor: pointer;
+
+        @media (min-width: 768px) {
+            max-width: 300px;
+        }
     }
 }
 
@@ -351,13 +418,6 @@ body h2 {
     fill: #E1E1E1;
 }
 
-
-
-@media (min-width: 576px) {
-    .rev-form-banner {
-        border-radius: var(--rds);
-    }
-}
 
 @media (min-width: 768px) {
     .rev-form__fields {

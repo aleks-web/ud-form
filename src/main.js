@@ -24,6 +24,10 @@ document.addEventListener('DOMContentLoaded', (e) => {
 document.addEventListener('DOMContentLoaded', (e) => {
     const form = document.querySelector('form.rev-form');
 
+    if (localStorage.getItem('rev-form')) {
+        form.classList.add('rev-form__success');
+    }
+
     form.onsubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -41,13 +45,25 @@ document.addEventListener('DOMContentLoaded', (e) => {
         formData.append('fst_rec', fstRec);
         formData.append('fst_work', fstWork);
 
-        const result = await fetch('https://ultradent72.ru/revform/revform.php', {
+        const result = await fetch('/revform/revform.php', {
             method: 'POST',
-            body: formData
+            body: formData,
+            credentials: "same-origin"
         });
 
-        const jsonResult = await result.json();
+        try {
+            const jsonResult = await result.json();
 
-        console.log(jsonResult);
+            if (jsonResult.success) {
+                form.classList.add('rev-form__success');
+                localStorage.setItem('rev-form', 'success');
+            } else {
+                form.classList.remove('rev-form__success');
+                localStorage.removeItem('rev-form');
+            }
+        } catch (e) {
+            form.classList.remove('rev-form__success');
+            localStorage.removeItem('rev-form');
+        }
     }
 });
