@@ -49,15 +49,22 @@ body h2 {
         border-radius: var(--rds);
     }
 
-    &__image {
-        width: 100%;
-        display: flex;
+    &__img {
         position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 0;
-        height: 100%;
-        object-fit: cover;
+        bottom: 0;
+        right: 25px;
+        max-width: 315px;
+        display: none;
+
+        @media (min-width: 950px) {
+            display: flex;
+        }
+        
+        @media (min-width: 1200px) {
+            max-width: 345px;
+            right: 40px;
+            bottom: -45px;
+        }
     }
 }
 
@@ -66,12 +73,20 @@ body h2 {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 150px;
+    gap: 255px;
+
+    @media (min-width: 340px) {
+        gap: 410px;
+    }
+
+    @media (min-width: 500px) {
+        gap: 450px;
+    }
 
     @media (min-width: 576px) {
         max-width: 630px;
         gap: 35px;
-        margin-left: auto;
+        margin-right: auto;
     }
 
     &__title {
@@ -82,7 +97,7 @@ body h2 {
 
         @media (min-width: 576px) {
             font-size: 36px;
-            text-align: right;
+            text-align: left;
         }
     }
 
@@ -93,8 +108,6 @@ body h2 {
         text-align: center;
         padding: 15px 20px;
         position: relative;
-        overflow: hidden;
-        border-radius: 20px;
         font-weight: 700;
         color: #383838;
         font-size: 14px;
@@ -102,7 +115,37 @@ body h2 {
         @media (min-width: 576px) {
             font-size: 16px;
             max-width: max-content;
-            margin-left: auto;
+            margin-right: auto;
+        }
+
+        &-img {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+
+            img {
+                position: absolute;
+                bottom: 65%;
+                width: 100%;
+                z-index: -1;
+                max-width: 300px;
+
+                @media (min-width: 340px) {
+                    bottom: 140%;
+                }
+
+                @media (min-width: 576px) {
+                    display: none;
+                }
+            }
+        }
+
+        & > span {
+            z-index: 1;
         }
 
         &:before {
@@ -113,19 +156,30 @@ body h2 {
             aspect-ratio: 1;
             background-repeat: no-repeat;
             background-image: url("data:image/svg+xml;charset=UTF-8, %3csvg viewBox='0 0 15 15' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M7.5 15C8.48491 15 9.46018 14.806 10.3701 14.4291C11.2801 14.0522 12.1069 13.4997 12.8033 12.8033C13.4997 12.1069 14.0522 11.2801 14.4291 10.3701C14.806 9.46018 15 8.48491 15 7.5C15 6.51509 14.806 5.53982 14.4291 4.62987C14.0522 3.71993 13.4997 2.89314 12.8033 2.1967C12.1069 1.50026 11.2801 0.947814 10.3701 0.570903C9.46018 0.193993 8.48491 -1.46764e-08 7.5 0C5.51088 2.96403e-08 3.60322 0.790176 2.1967 2.1967C0.790176 3.60322 0 5.51088 0 7.5C0 9.48912 0.790176 11.3968 2.1967 12.8033C3.60322 14.2098 5.51088 15 7.5 15ZM7.30667 10.5333L11.4733 5.53333L10.1933 4.46667L6.61 8.76583L4.75583 6.91083L3.5775 8.08917L6.0775 10.5892L6.7225 11.2342L7.30667 10.5333Z' fill='%23383838'/%3e%3c/svg%3e");
+            z-index: 2;
+            position: relative;
         }
 
-        &:after {
-            content: "";
+        &-bg {
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: white;
-            filter: blur(20px);
-            opacity: 0.7;
-            z-index: -1;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 20px;
+            z-index: 1;
+
+            &:after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #F7F7F7;
+                z-index: -1;
+            }
         }
     }
 
@@ -142,9 +196,9 @@ body h2 {
         @media (min-width: 576px) {
             font-size: 30px;
             margin: 0;
-            margin-left: auto;
+            margin-right: auto;
             margin-top: 15px;
-            text-align: right;
+            text-align: left;
         }
 
         &-svg {
@@ -155,9 +209,7 @@ body h2 {
             right: 0;
 
             @media (min-width: 576px) {
-                left: -60px;
-                transform: scaleX(-1) rotate(-20deg);
-                top: -80px;
+                display: none;
             }
         }
     }
@@ -186,16 +238,16 @@ body h2 {
         border-radius: 20px;
         overflow: hidden;
         border: none;
-        background-color: #2CE68CCC;
+        background: linear-gradient(90deg, #4CB074 0%, #286041 100%);
         font-size: 14px;
-        color: #383838;
+        color: white;
         font-weight: 600;
 
         @media (min-width: 576px) {
             font-size: 16px;
             max-width: max-content;
             width: 100%;
-            margin-left: auto;
+            margin-right: auto;
 
             span {
                 min-width: max-content;
@@ -205,6 +257,7 @@ body h2 {
         svg {
             max-width: 20px;
             min-width: 20px;
+            fill: white;
         }
     }
 }
@@ -346,6 +399,7 @@ body h2 {
 
 .rev-form-banner {
     width: 100%;
+    background: radial-gradient(102.44% 569.65% at 73.07% 64.62%, #F0F0F0 0%, #E0E0E0 100%), linear-gradient(90deg, rgba(255, 255, 255, 0) 55.3%, rgba(255, 255, 255, 0.2) 100%);
 }
 
 .rev-form-label {

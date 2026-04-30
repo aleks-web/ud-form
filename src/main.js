@@ -45,7 +45,14 @@ document.addEventListener('DOMContentLoaded', (e) => {
         formData.append('fst_rec', fstRec);
         formData.append('fst_work', fstWork);
 
-        const result = await fetch('/revform/revform.php', {
+        let url = '';
+        if (window.location.host === 'ultradent72.ru') {
+            url = 'https://api.tech-ud72.ru/mainsite/?city=72';
+        } else {
+            url = 'https://api.tech-ud72.ru/mainsite/?city=66';
+        }
+
+        const result = await fetch(url, {
             method: 'POST',
             body: formData,
             credentials: "same-origin"
@@ -57,13 +64,16 @@ document.addEventListener('DOMContentLoaded', (e) => {
             if (jsonResult.success) {
                 form.classList.add('rev-form__success');
                 localStorage.setItem('rev-form', 'success');
+                document.querySelector('.loading').remove();
             } else {
                 form.classList.remove('rev-form__success');
                 localStorage.removeItem('rev-form');
+                document.querySelector('.loading').remove();
             }
         } catch (e) {
             form.classList.remove('rev-form__success');
             localStorage.removeItem('rev-form');
+            document.querySelector('.loading').remove();
         }
     }
 });
